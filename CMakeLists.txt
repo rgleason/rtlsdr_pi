@@ -1,25 +1,25 @@
-##---------------------------------------------------------------------------
-## Author:      Sean d'Epagnier
-##***************************************************************************
-## *   Copyright (C) 2010 by Sean d'Epagnier                              *
-## *   License:     GPLv3+
-## *   This program is free software; you can redistribute it and/or modify  *
-## *   it under the terms of the GNU General Public License as published by  *
-## *   the Free Software Foundation; either version 2 of the License, or     *
-## *   (at your option) any later version.                                   *
-## *                                                                         *
-## *   This program is distributed in the hope that it will be useful,       *
-## *   but WITHOUT ANY WARRANTY; without even the implied warranty of        *
-## *   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the         *
-## *   GNU General Public License for more details.                          *
-## *                                                                         *
-## *   You should have received a copy of the GNU General Public License     *
-## *   along with this program; if not, write to the                         *
-## *   xxxxxxxxxxxxxxxxxxxxxxxxxxxxxx,                                       *
-## *   xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx                                       *
-#-----------------------------------------------------------------------------
-# Frontend2 Author: Jon Gough 
-# Testplugin(TP) v1.0.286.3 29/12/2023 DD/MM/YYYY format
+# ---------------------------------------------------------------------------
+# Author:      Sean d'Epagnier   Copyright: 
+# License: GPL v3+   License:  wxWidgets
+# ***************************************************************************
+# - Copyright (C) 2010 by Sean d'Epagnier                              *
+# - License:     GPLv3+
+# - This program is free software; you can redistribute it and/or modify  *
+# - it under the terms of the GNU General Public License as published by  *
+# - the Free Software Foundation; either version 2 of the License, or     *
+# - (at your option) any later version.                                   *
+# - *
+# - This program is distributed in the hope that it will be useful,       *
+# - but WITHOUT ANY WARRANTY; without even the implied warranty of        *
+# - MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the         *
+# - GNU General Public License for more details.                          *
+# - *
+# - You should have received a copy of the GNU General Public License     *
+# - along with this program; if not, write to the                         *
+# - xxxxxxxxxxxxxxxxxxxxxxxxxxxxxx,                                       *
+# - xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx                                       *
+# -----------------------------------------------------------------------------
+# Frontend2 Author: Jon Gough Testplugin(TP) v1.0.326.0 18/01/2025 DD/MM/YYYY
 # buildCI:yes useODAPI:no validateJSON:no
 # ---------------------------------------------------------------------------
 ## -- When changing this file do NOT change the order of the sections.    -- ##
@@ -33,16 +33,20 @@ set(CMLOC "CMakeLists: ")
 # define minimum cmake version
 cmake_minimum_required(VERSION 3.5.1)
 if(COMMAND cmake_policy)
-    if(POLICY CMP0043)
-        cmake_policy(SET CMP0043 NEW)
-    endif(POLICY CMP0043)
-    cmake_policy(SET CMP0048 NEW)
-# Need cmake 3.13 to implement this, but raspbian builds are at 3.7.2 and bionic at 3.10 and xenial builds at 3.5.1
-#    cmake_policy(SET CMP0076 NEW)
-    if(POLICY CMP0077)
-        cmake_policy(SET CMP0077 NEW)
-    endif(POLICY CMP0077)
-endif(COMMAND cmake_policy)
+  if (POLICY CMP0043)
+    cmake_policy(SET CMP0043 NEW)
+  endif (POLICY CMP0043)
+  cmake_policy(SET CMP0048 NEW)
+  if (POLICY CMP0076)
+    cmake_policy(SET CMP0076 NEW)
+  endif (POLICY CMP0076)
+  if (POLICY CMP0077)
+    cmake_policy(SET CMP0077 NEW)
+  endif (POLICY CMP0077)
+endif (COMMAND cmake_policy)
+
+
+
 
 # define plugin name, owner and versions
 SET(VERBOSE_NAME "RTLSDR")
@@ -51,13 +55,15 @@ set(TITLE_NAME "RTLSDR")
 set(PACKAGE_CONTACT "Sean D'Epagnier ")
 set(PACKAGE "rtlsdr_pi")
 set(SHORT_DESCRIPTION "rtlsdr PlugIn for OpenCPN")
-set(LONG_DESCRIPTION "Automatically controls external command-line tools for software radio, options for AIS data, as well as ADS-b FM radio and vhf audio.")
+set(LONG_DESCRIPTION
+	"Automatically controls external command-line tools for software radio, options for AIS data, as well as ADS-b FM radio and vhf audio."
+)
 
 set(VERSION_MAJOR "1")
 set(VERSION_MINOR "4")
 set(VERSION_PATCH "8")
 set(VERSION_TWEAK "0")
-set(VERSION_DATE  "22/01/2023")#DD/MM/YYYY format
+set(VERSION_DATE  "25/01/2025")#DD/MM/YYYY format
 set(OCPN_MIN_VERSION "ov58")
 
 set(OCPN_API_VERSION_MAJOR "1")
@@ -76,15 +82,17 @@ set(BETA "beta")   #Standard Repos
 set(ALPHA "alpha") #Standard Repos
 
 # Set if  Cloudsmith Base Repository name does not match your Git Repository name.
-#set(CLOUDSMITH_BASE_REPOSITORY "${GIT_REPOSITORY_NAME}")
-#set(CLOUDSMITH_BASE_REPOSITORY "opencpn-plugins")  #Ricks's customization
-set(CLOUDSMITH_BASE_REPOSITORY "rtlsdr")  #without the pi
+#set (CLOUDSMITH_BASE_REPOSITORY "${GIT_REPOSITORY_NAME}")
+#set (CLOUDSMITH_BASE_REPOSITORY "opencpn-plugins")  #Ricks's customization
+set (CLOUDSMITH_BASE_REPOSITORY "rtlsdr")  #without the pi
 
 # Set the following to use OpenCPN cloudsmith repositories instead of own repositories
 set(CLOUDSMITH_USER "opencpn")
-# set(CLOUDSMITH_USER "rick-gleason")
+# set (CLOUDSMITH_USER "rick-gleason")
 
-set(XML_INFO_URL "https://opencpn.org/OpenCPN/plugins/rtlsdr.html")
+set(XML_INFO_URL
+	"https://opencpn.org/OpenCPN/plugins/rtlsdr.html"
+)
 set(XML_SUMMARY ${SHORT_DESCRIPTION})
 set(XML_DESCRIPTION ${LONG_DESCRIPTION})
 
@@ -101,13 +109,20 @@ set(OpenGL_GL_PREFERENCE "LEGACY")   #not operational
 option(USE_GL "Enable OpenGL support" ON)
 message(STATUS "${CMLOC}USE_GL: ${USE_GL}")
 
-if("${CMAKE_BUILD_TYPE}" STREQUAL "")
-    set(CMAKE_BUILD_TYPE "Release" CACHE STRING "Choose the type of build" FORCE)
-endif("${CMAKE_BUILD_TYPE}" STREQUAL "")
-set_property(CACHE CMAKE_BUILD_TYPE PROPERTY STRINGS "" "Debug" "Release" "RelWithDebInfo" "MinSizeRel")
+if ("${CMAKE_BUILD_TYPE}" STREQUAL "")
+  set(CMAKE_BUILD_TYPE
+      "Release"
+      CACHE STRING "Choose the type of build" FORCE
+  )
+endif ("${CMAKE_BUILD_TYPE}" STREQUAL "")
+set_property(
+  CACHE CMAKE_BUILD_TYPE PROPERTY STRINGS "" "Debug" "Release" "RelWithDebInfo"
+                                  "MinSizeRel"
+)
 message(STATUS "${CMLOC}Build type: ${CMAKE_BUILD_TYPE}")
 
-## ----- Statements below used to setup standard variables required by the CMAKE process -- Do not remove - ##
+# ----- Statements below used to setup standard variables required by the CMAKE  -##
+# ----- process -- Do not remove -##
 
 project(${PACKAGE})
 
@@ -156,7 +171,7 @@ SET(HDRS
 			src/rtlsdrPrefs.h
 			src/rtlsdrUI.h
 			src/georef.h
-	)
+)
 
 add_definitions(-DPLUGIN_USE_SVG)
 
@@ -174,16 +189,15 @@ add_definitions(-DPLUGIN_USE_SVG)
 ## This add_library  can be used in conditionals below.
 ##=============================================================
 
-SET(SRC ${SRCS} ${HDRS} )
+set(SRC ${SRCS} ${HDRS} )
 
 ##=============================================================
 ## Modify/configure 'Include' Directories below for the Plugin
 ##=============================================================
 
 #include_directories(BEFORE ${PROJECT_SOURCE_DIR}/include)
+
 include_directories(BEFORE ${PLUGIN_SOURCE_DIR}/src/libaudiofile)
-
-
 IF(UNIX AND NOT APPLE)
   find_library(RTLSDR_LIBRARY NAMES rtlsdr
     DOC "The rtlsdr library"
@@ -233,27 +247,25 @@ ENDIF(WIN32)
 
 target_sources(${PACKAGE_NAME} PUBLIC ${SRC} )
 
-##==============================================================
+
+if (NOT OCPN_FLATPAK_CONFIG)
+  # Build environment not available when flatpak is being configured so
+  # following statements will not work
+  message(STATUS "${CMLOC}Adding target link libraries to ${PACKAGE_NAME}")
+
+  if (WIN32)
+    add_subdirectory(opencpn-libs/WindowsHeaders)
+    target_link_libraries(${PACKAGE_NAME} windows::headers)
+  endif (WIN32)
+
+  add_subdirectory(opencpn-libs/api-17)
+  target_link_libraries(${PACKAGE_NAME} ocpn::api)
 
 
-if(NOT OCPN_FLATPAK_CONFIG)
-    # Build environment not available when flatpak is being configured 
-	# so following statements will not work
-    message(STATUS "${CMLOC}Adding target link libraries to ${PACKAGE_NAME}")
+  add_subdirectory(opencpn-libs/plugin_dc)
+  target_link_libraries(${PACKAGE_NAME} ocpn::plugin-dc)
 
-    if(WIN32)
-        add_subdirectory(opencpn-libs/WindowsHeaders)
-        target_link_libraries(${PACKAGE_NAME} windows::headers)
-    endif()
-
-    add_subdirectory(opencpn-libs/api-17)
-    target_link_libraries(${PACKAGE_NAME} ocpn::api)
-
-    add_subdirectory(opencpn-libs/plugin_dc)
-    target_link_libraries(${PACKAGE_NAME} ocpn::plugin-dc)
-
-endif(NOT OCPN_FLATPAK_CONFIG)
-
+endif (NOT OCPN_FLATPAK_CONFIG)
 
 add_definitions(-DTIXML_USE_STL)
 
@@ -267,9 +279,9 @@ add_definitions(-DTIXML_USE_STL)
 ##------- Change below to match project requirements --------------------##
 
 # Needed for android builds
-if(QT_ANDROID)
-    include_directories(BEFORE ${qt_android_include})
-endif(QT_ANDROID)
+if (QT_ANDROID)
+  include_directories(BEFORE ${qt_android_include})
+endif (QT_ANDROID)
 
 ## Needed for all builds Do not change - needed to build app -------------##
 ##===============================================================
@@ -282,7 +294,11 @@ include("PluginPackage")
 ## ----- Do not change section above - needed to configure build process --##
 
 message(STATUS "${CMLOC}include directories: ")
-get_property(dirs DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR} PROPERTY INCLUDE_DIRECTORIES)
-foreach(dir ${dirs})
-    message(STATUS "${CMLOC}dir='${dir}'")
-endforeach()
+get_property(
+  dirs
+  DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}
+  PROPERTY INCLUDE_DIRECTORIES
+)
+foreach (dir ${dirs})
+  message(STATUS "${CMLOC}dir='${dir}'")
+endforeach ()
