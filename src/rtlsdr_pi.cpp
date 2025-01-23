@@ -96,7 +96,7 @@ void rtlsdr_pi::OnTestTerminate(wxProcessEvent& event)
 
 
 rtlsdr_pi::rtlsdr_pi(void *ppimgr)
-    : opencpn_plugin_117(ppimgr), m_bNeedStart(false), m_Process1(NULL), m_Process2(NULL),
+    : opencpn_plugin_118(ppimgr), m_bNeedStart(false), m_Process1(NULL), m_Process2(NULL),
       m_prtlsdrDialog(NULL), m_flightsDialog(NULL)
 {
     // Create the PlugIn icons
